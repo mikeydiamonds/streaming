@@ -1,0 +1,36 @@
+---
+# Setup UFW firewall.
+- name: UFW - Allow SSH connections
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Allow all access to tcp port 8080
+  ufw:
+    rule: allow
+    port: '8080'
+    proto: tcp
+
+- name: Allow all access to tcp port 443
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
+- name: Allow all access to tcp port 1935
+  ufw:
+    rule: allow
+    port: '1935'
+    proto: any
+
+- name: UFW - Deny all other incoming traffic by default
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming

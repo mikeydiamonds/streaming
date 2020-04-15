@@ -1,0 +1,29 @@
+---
+# Install Packages
+
+- name: Install Prerequisites
+  apt: 
+    name: aptitude
+    update_cache: yes
+    state: latest
+    force_apt_get: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false
+
+- name: Install required system packages
+  apt:
+    name: "{{ sys_packages }}"
+    state: latest
+
+- name: Update Ubuntu
+  apt:
+    upgrade: dist
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false
+
+- name: Reboot to apply updates
+  reboot:
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false

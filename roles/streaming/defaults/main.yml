@@ -1,0 +1,97 @@
+---
+# Speed up the deployment process by disabling some security practices
+speed_up_deploy: true #true or false
+
+# Facebook
+stream_to_facebook: true # true or false
+facebook_url: "rtmps://live-api-s.facebook.com:443/rtmp"
+# Facebook stream key is valid for 7 days
+facebook_stream_key: "your_facebook_stream_key"
+facebook_profile: "https://www.facebook.com/your_profile"
+
+# YouTube
+# Copy your server URL and Stream key from https://www.youtube.com/live_dashboard
+stream_to_youtube: true # true or false
+youtube_url: "rtmp://a.rtmp.youtube.com/live2"
+youtube_stream_key: "your_youtube_stream_key"
+youtube_channel: "https://www.youtube.com/channel/your_channel"
+
+# Twitch
+# Copy your primary stream key from https://dashboard.twitch.tv/u/yourusername/settings/channel
+# Copy a stream URL from https://stream.twitch.tv/ingests/
+# The closer this endpoint is to your streaming server the better
+stream_to_twitch: true # true or false
+twitch_url: "rtmp://live-atl.twitch.tv/app"
+twitch_stream_key: "your_twitch_stream_key"
+twitch_channel: "https://www.twitch.tv/your_channel"
+
+# Instagram
+stream_to_instagram: false # true or false
+instagram_url: "rtmp://instagram.com/live2"
+instagram_stream_key: "your_instagram_stream_key"
+instagram_profile: "https://www.instagram.com/your_profile/"
+
+# Create a user on the server
+create_user: a_username
+
+# This copies the local public key (Mac only) to allow ssh connection to the server
+copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+# ---- the settings below should only be changed if you know what you're doing ----#
+
+sys_packages: [ 'curl', 'vim', 'git', 'ufw']
+
+security_ssh_port: 22
+security_ssh_password_authentication: "no"
+security_ssh_permit_root_login: "no"
+security_ssh_usedns: "no"
+security_ssh_permit_empty_password: "no"
+security_ssh_challenge_response_auth: "no"
+security_ssh_gss_api_authentication: "no"
+security_ssh_x11_forwarding: "no"
+security_ssh_restart_handler_state: restarted
+
+security_sudoers_passwordless: []
+security_sudoers_passworded: []
+
+security_autoupdate_enabled: true
+security_autoupdate_blacklist: []
+
+# Autoupdate mail settings used on Debian/Ubuntu only.
+security_autoupdate_reboot: "false"
+security_autoupdate_reboot_time: "03:00"
+security_autoupdate_mail_to: ""
+security_autoupdate_mail_on_error: true
+
+security_fail2ban_enabled: true
+
+# Docker edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+docker_edition: 'ce'
+docker_package: "docker-{{ docker_edition }}"
+docker_package_state: present
+
+# Service options.
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+# Docker Compose options.
+docker_install_compose: true
+docker_compose_version: "1.25.4"
+docker_compose_path: /usr/local/bin/docker-compose
+
+# Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+docker_apt_release_channel: stable
+docker_apt_arch: amd64
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: true
+docker_apt_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+
+# A list of users who will be added to the docker group.
+docker_users: ["{{ create_user }}"]
+
+# For Python 3, use python3-pip.
+pip_package: python3-pip
+pip_executable: "{{ 'pip3' if pip_package.startswith('python3') else 'pip' }}"
+
+pip_install_packages: [docker]

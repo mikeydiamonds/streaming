@@ -1,0 +1,64 @@
+---
+- name: Create nginx directory
+  file:
+    path: /etc/nginx/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy nginx config
+  template:
+    src: nginx.conf.template.j2
+    dest: /etc/nginx/nginx.conf.template
+    owner: root
+    group: root
+    mode: 0644
+  # notify: restart nginx
+
+- name: Create certs directory
+  file:
+    path: /opt/certs/
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy cert file
+  copy:
+    src: example.com.crt
+    dest: /opt/certs/example.com.crt
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy cert key
+  copy:
+    src: example.com.key
+    dest: /opt/certs/example.com.key
+    owner: root
+    group: root
+    mode: '0644'
+
+# Install Nginx Docker container from https://hub.docker.com/r/alfg/nginx-rtmp/
+- name: Create nginx docker container
+  docker_container:
+    name: nginx-rtmp
+    hostname: "{{ inventory_hostname }}"
+    image: "alfg/nginx-rtmp"
+    state: started
+    network_mode: host
+    privileged: yes
+    pull: yes
+    log_driver: 'json-file'
+    log_opt:
+      max-size: 100m
+    restart_policy: unless-stopped
+    volumes: 
+      - /etc/nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+      - /opt/certs/:/opt/certs/
+    ports:
+     - "1935:1935"
+     - "19350:19350"
+     - "8080:80"
+     - "443:443"

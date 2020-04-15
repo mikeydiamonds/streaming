@@ -1,0 +1,19 @@
+# Terraform files
+**/.terraform/*
+# *.tfvars
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ansible files
+# roles/streaming/defaults/main.yml
+
+# OS
+.DS_Store
+
+# Other files
+Vagrantfile

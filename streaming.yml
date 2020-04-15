@@ -1,0 +1,8 @@
+---
+# file: streaming.yml
+- hosts: all
+  become: true
+  gather_facts: true
+
+  roles:
+    - streaming

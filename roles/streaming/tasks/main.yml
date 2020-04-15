@@ -1,0 +1,85 @@
+---
+# Basics
+- include_tasks: basics.yml
+
+# Setup user account
+- include_tasks: users.yml
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false
+
+# SSH
+- include_tasks: ssh.yml
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false
+
+# Fail2Ban
+- include_tasks: fail2ban.yml
+  when: security_fail2ban_enabled | bool and speed_up_deploy is defined and speed_up_deploy is sameas false
+
+- name: Ensure fail2ban is running and enabled on boot.
+  service: name=fail2ban state=started enabled=yes
+  when: security_fail2ban_enabled | bool and speed_up_deploy is defined and speed_up_deploy is sameas false
+
+# Autoupdate
+- include_tasks: autoupdate.yml
+  when: security_autoupdate_enabled | bool and speed_up_deploy is defined and speed_up_deploy is sameas false
+
+# Pip
+- include_tasks: pip.yml
+
+# Docker
+- include_tasks: docker.yml
+
+- name: Install Docker.
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+
+- name: Ensure handlers are notified now to avoid firewall conflicts.
+  meta: flush_handlers
+
+- include_tasks: docker-compose.yml
+  when: docker_install_compose | bool
+
+- include_tasks: docker-users.yml
+  when: docker_users | length > 0
+
+# UFW firewall
+- include_tasks: firewall.yml
+  when: speed_up_deploy is defined and speed_up_deploy is sameas false
+
+# Stunnel
+- include_tasks: stunnel.yml
+  when: stream_to_facebook is defined and stream_to_facebook is sameas true
+
+# Stunnel
+- include_tasks: instagram.yml
+  when: stream_to_instagram is defined and stream_to_instagram is sameas true
+
+# Nginx
+- include_tasks: nginx.yml
+
+- name: Facebook
+  debug:
+    msg: Facebook stream {{ facebook_profile }}
+  when: stream_to_facebook is defined and stream_to_facebook is sameas true
+
+- name: Youtube
+  debug:
+    msg: YouTube stream {{ youtube_channel }}
+  when: stream_to_youtube is defined and stream_to_youtube is sameas true
+
+- name: Twitch
+  debug:
+    msg: Twitch stream {{ twitch_channel }}
+  when: stream_to_twitch is defined and stream_to_twitch is sameas true
+
+- name: What Now?
+  debug:
+    msg:
+      - 'Stream to rtmp://{{ ansible_default_ipv4.address }}:1935/stream/hello'

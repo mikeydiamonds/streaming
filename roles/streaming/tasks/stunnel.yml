@@ -1,0 +1,22 @@
+---
+# Thanks to @lax for the help with Facebook's new rtmps requirements https://dev.to/lax/rtmps-relay-with-stunnel-12d3
+- name: Install required system packages
+  apt:
+    name: stunnel4
+    state: latest
+
+- name: Copy stunnel config
+  template:
+    src: stunnel.conf.j2
+    dest: /etc/stunnel/stunnel.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Eenable stunnel service
+  lineinfile:
+    dest: /etc/default/stunnel4
+    state: present
+    regexp: ^ENABLED=
+    line: ENABLED=1
+  notify: restart stunnel
