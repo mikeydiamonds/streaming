@@ -12,11 +12,11 @@ Facebook's stream key and url are provided on the [Live page](https://www.facebo
 
 Youtube's key and url are shown in the [classic live control room](https://www.youtube.com/live_dashboard).
 
-Twitch supplies a permanent stream key at [https://dashboard.twitch.tv/u/yourusername/settings/channel]. The Twitch url can be obtained on their [Ingests](https://stream.twitch.tv/ingests/) page. Choose the location closest to your streaming server for best performance.
+Twitch supplies a permanent stream key at https://dashboard.twitch.tv/u/yourusername/settings/channel. The Twitch url can be obtained on their [Ingests](https://stream.twitch.tv/ingests/) page. Choose the location closest to your streaming server for best performance.
 
-With these credentials gathered, update the variable in `/roles/streaming/defaults/main.yml`.
+With these credentials gathered, update the variables in `/roles/streaming/defaults/main.yml`.
 
-You can choose which platforms to stream to by setting `true` or `false` in the `stream_to_servicename` variable.
+You can choose which platforms to stream on by setting `true` or `false` in the `stream_to_servicename` variable.
 
 It's tested with [OBS](https://obsproject.com/) from macOS using the smallest Digital Ocean Droplet.
 
@@ -50,7 +50,6 @@ Clone this repository from your terminal and enter the new directory.
 
 ```
 git clone git@github.com:mikeydiamonds/streaming.git && cd streaming
-
 ```
 
 > The streaming credentials and DO token are sensitive data. Take care not to expose them.
@@ -59,7 +58,9 @@ Alter the stream keys, stream urls and select `true` or `false` on your desired 
 
 Add your Digital ocean API token to `terraform.tfvars`.
 
-Now we can start the server script. Once this script is run you will incur costs from Digital Ocean. This script is set to use a \$5/mo droplet in NYC but feel free to make alterations in `main.tf`.
+Now we can start the server script. Once this script is run you will incur costs from Digital Ocean.
+
+> This script is set to use a \$5/mo DO droplet in NYC but feel free to make alterations in `main.tf`.
 
 ```
 terraform plan && terraform apply --auto-approve
