@@ -1,6 +1,6 @@
 # Terraform files
 **/.terraform/*
-# *.tfvars
+*.tfvars
 *.tfstate
 *.tfstate.*
 crash.log
@@ -10,7 +10,7 @@ override.tf.json
 *_override.tf.json
 
 # Ansible files
-# roles/streaming/defaults/main.yml
+roles/streaming/defaults/main.yml
 
 # OS
 .DS_Store
