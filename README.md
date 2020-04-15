@@ -1,16 +1,24 @@
 # Streaming Server
 
-This script is designed to setup a live restreaming server to Facebook, Youtube and Twitch from a custom RTMP stream.
+This script allows you to stream live to Facebook, Youtube and Twitch at once without the bandwidth issues.
+
+The code is designed to setup a restreaming server and will produce a custom RTMP streaming URL which is meant to be inserted into your local live streaming software like [Open Broadcaster](https://obsproject.com/) (OBS).
 
 You'll no longer need an expensive paid account on restreaming platforms like [Restream.io](https://restream.io/) and can have total control over your broadcast.
 
 The beauty of this streaming method is the server is ephemeral, meaning once the stream has ended you can `destroy` the server. This saves money and prevents malicious actors from tampering with your setup.
 
-You will need to visit each platform to obtain your stream key and stream URL. Each stream will require a new stream key.
+You will need to visit each platform to obtain your stream key and stream URL. Each time you live stream will require a new stream key.
+
+### Facebook
 
 Facebook's stream key and url are provided on the [Live page](https://www.facebook.com/live/producer) after selecting "Use Stream Key". The stream key is valid for 7 days according to Facebook.
 
+### Youtube
+
 Youtube's key and url are shown in the [classic live control room](https://www.youtube.com/live_dashboard).
+
+### Twitch
 
 Twitch supplies a permanent stream key at https://dashboard.twitch.tv/u/yourusername/settings/channel. The Twitch url can be obtained on their [Ingests](https://stream.twitch.tv/ingests/) page. Choose the location closest to your streaming server for best performance.
 
@@ -58,7 +66,7 @@ Alter the stream keys, stream urls and select `true` or `false` on your desired 
 
 Add your Digital ocean API token to `terraform.tfvars`.
 
-Now we can start the server script. Once this script is run you will incur costs from Digital Ocean.
+Now we can run the server script. Once this script is run you will incur costs from Digital Ocean.
 
 > This script is set to use a \$5/mo DO droplet in NYC but feel free to make alterations in `main.tf`.
 
