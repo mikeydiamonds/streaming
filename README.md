@@ -8,7 +8,7 @@ You'll no longer need an expensive paid account on restreaming platforms like [R
 
 The beauty of this streaming method is the server is ephemeral, meaning once the stream has ended you can `destroy` the server. This saves money and prevents malicious actors from tampering with your setup.
 
-You will need to visit each platform to obtain your stream key and stream URL. Each time you live stream will require a new stream key.
+You will need to visit each platform to obtain your stream key and stream URL. Each time you live stream will require a new stream key and a rerunning this script.
 
 ### Facebook
 
@@ -68,13 +68,13 @@ Add your Digital ocean API token to `terraform.tfvars`.
 
 Now we can run the server script. Once this script is run you will incur costs from Digital Ocean.
 
-> This script is set to use a \$5/mo DO droplet in NYC but feel free to make alterations in `main.tf`.
+> This script is set to use a \$5/mo (\$0.007/hour) DO droplet in NYC but feel free to make alterations in `main.tf`.
 
 ```
 terraform plan && terraform apply --auto-approve
 ```
 
-The Terraform orchestrator will automatically call the Ansible provisioning scripts.
+The Terraform orchestrator will automatically call the Ansible provisioning scripts. The entire setup takes less than 5 minutes.
 
 When you're done with the server/live stream you can destroy the droplet and stop incurring costs.
 
@@ -101,5 +101,21 @@ Note: `hello` is just a placeholder and can be changed to anything you'd like.
 ### How to Watch
 
 Once your live stream is started from your local streaming software it will appear on your chosen platforms; your Facebook timeline, Youtube channel and Twitch channel.
+
+When you're done with the server/live stream destroy the droplet and stop incurring costs.
+
+```
+terraform destroy -auto-approve
+```
+
+### Thanks
+
+This was a fun project I worked on to show off the power of automation as a guest lecturer at a local high school.
+
+With the COVID-19 pandemic, some may find this helpful to get their message online.
+
+I hope someone finds it useful.
+
+---
 
 [![Buy me a coffee!](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/mikeydiamonds)
