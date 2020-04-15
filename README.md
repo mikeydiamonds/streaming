@@ -2,7 +2,7 @@
 
 This script is designed to setup a live restreaming server to Facebook, Youtube and Twitch from a custom RTMP stream.
 
-You'll no longer need a paid account at restreaming platforms like [Restream.io](https://restream.io/) and can have total control over your broadcast.
+You'll no longer need an expensive paid account on restreaming platforms like [Restream.io](https://restream.io/) and can have total control over your broadcast.
 
 The beauty of this streaming method is the server is ephemeral, meaning once the stream has ended you can `destroy` the server. This saves money and prevents malicious actors from tampering with your setup.
 
