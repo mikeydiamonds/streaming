@@ -94,4 +94,4 @@ Note: `hello` is just a placeholder and can be changed to anything you'd like.
 
 Once your live stream is started from your local streaming software it will appear on your chosen platforms; your Facebook timeline, Youtube channel and Twitch channel.
 
-![Buy me a coffee!](https://cdn.buymeacoffee.com/buttons/default-orange.png)
+[![Buy me a coffee!](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/mikeydiamonds)
