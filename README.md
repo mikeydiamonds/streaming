@@ -78,8 +78,11 @@ terraform destroy -auto-approve
 The script will output the url to add to OBS or similar streaming software after all the provisioning is complete. It will look something like:
 
 > digitalocean_droplet.streaming (local-exec): TASK [streaming : What Now?]
+>
 > digitalocean_droplet.streaming (local-exec): ok: [192.168.1.143] => {
+>
 > digitalocean_droplet.streaming (local-exec): "msg": [
+>
 > digitalocean_droplet.streaming (local-exec): "Stream to rtmp://192.168.1.143:1935/stream/hello",
 
 `rtmp://192.168.1.143:1935/stream/` is the stream url and `hello` is the key you'll use in your local streaming software.
